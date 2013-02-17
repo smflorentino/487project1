@@ -25,10 +25,11 @@ public class TwitterCounter {
 			//then tokenize each tweet for word count
 			String data = value.toString();
 			String tweet;
+			StringTokenizer stringTokenizer;
 			TweetTokenizer tweetTokenizer = new TweetTokenizer(data);
 			while (tweetTokenizer.hasMoreElements()) {
 				tweet = tweetTokenizer.nextElement();
-				StringTokenizer stringTokenizer = new StringTokenizer(tweet);
+				stringTokenizer = new StringTokenizer(tweet);
 				while (stringTokenizer.hasMoreTokens()) {
 					word.set(stringTokenizer.nextToken());
 					output.collect(word, one);

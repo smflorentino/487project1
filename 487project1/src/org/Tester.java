@@ -9,8 +9,8 @@ import org.apache.hadoop.mapred.Reporter;
 public class Tester {
 //this shows that our TweetTokenizer class appears to be working
 	public static void main(String args[]){
-		TweetTokenizer t = new TweetTokenizer("<un>Test User</un><tt>Hello world</tt><dt></dt><rt></rt>");
-		if(t.hasMoreElements()){
+		TweetTokenizer t = new TweetTokenizer("<un>Test User</un><tt>Hello world1</tt><dt></dt><rt></rt><un>Test User</un><tt>Hello world2</tt><dt></dt><rt></rt><un>Test User</un><tt>Hello world</tt><dt></dt><rt></rt><un>Test User</un><tt>Hello world</tt><dt></dt><rt></rt>");
+		while(t.hasMoreElements()){
 			System.out.println("hasMoreElements true");
 			System.out.println("Current token: "+t.nextElement());
 		}
