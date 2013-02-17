@@ -1,0 +1,22 @@
+package org;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reporter;
+
+public class Tester {
+//this shows that our TweetTokenizer class appears to be working
+	public static void main(String args[]){
+		TweetTokenizer t = new TweetTokenizer("<un>Test User</un><tt>Hello world</tt><dt></dt><rt></rt>");
+		if(t.hasMoreElements()){
+			System.out.println("hasMoreElements true");
+			System.out.println("Current token: "+t.nextElement());
+		}
+	
+	}
+	
+	
+	
+}
