@@ -3,8 +3,8 @@ package org;
 import java.io.IOException;
 import java.util.*;
 
-import org.WordCount.Map;
-import org.WordCount.Reduce;
+import org.TwitterCounter.Map;
+import org.TwitterCounter.Reduce;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.io.*;
