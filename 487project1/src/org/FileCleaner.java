@@ -21,10 +21,21 @@ public class FileCleaner {
 			e.printStackTrace();
 		}
 	}
+	
 	public void start() throws IOException {
-		String fileName = JOptionPane.showInputDialog("Enter file name to clean");
+		String fileName = JOptionPane.showInputDialog("Enter BASE File name to clean: (i.e. for tweets.log.20 enter tweets.log)");
+		int start = Integer.parseInt(JOptionPane.showInputDialog("Enter STARTING log file extension (i.e. for .1 enter 1"));
+		int end = Integer.parseInt(JOptionPane.showInputDialog("Enter ENDING log file extension (i.e. for .20 enter 20"));
+		for(int i=start;i<=end;i++) {
+			System.out.println("Processing file " + i + "...");
+			this.startCleaning(fileName + "." + i);
+		}
+		JOptionPane.showMessageDialog(null, "Processing Complete!");
+	}
+	private void startCleaning(String fileName) throws IOException {
+		//String fileName = JOptionPane.showInputDialog("Enter file name to clean");
 		BufferedReader sc = new BufferedReader(new FileReader(fileName));
-		FileWriter fs=  new FileWriter(fileName+"clean");
+		FileWriter fs=  new FileWriter(fileName+"clean.txt");
 		BufferedWriter out = new BufferedWriter(fs);
 		
 		String line;
