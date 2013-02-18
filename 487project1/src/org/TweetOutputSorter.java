@@ -12,36 +12,38 @@ import org.apache.hadoop.util.*;
 
 public class TweetOutputSorter {
  
-  public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
+  public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, IntWritable, Text> {
     private final static IntWritable one = new IntWritable(1);
-    private Text count = new Text();
+    private IntWritable count = new IntWritable();
     private Text word = new Text();
-    public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+    public void map(LongWritable key, Text value, OutputCollector<IntWritable, Text> output, Reporter reporter) throws IOException {
       String line = value.toString();
       StringTokenizer tokenizer = new StringTokenizer(line);
-      word.set(tokenizer.nextToken());
-      count.set(tokenizer.nextToken());
+      
       //output.collect(count, word);
       while (tokenizer.hasMoreTokens()) {
-        //word.set(tokenizer.nextToken());
-        //output.collect(word, one);
+    	word.set(tokenizer.nextToken());
+        count.set(Integer.parseInt(tokenizer.nextToken()));
+        output.collect(count, word);
+          //word.set(tokenizer.nextToken());
       }
     }
   }
  
-  public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
-    public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-      int sum = 0;
+  public static class Reduce extends MapReduceBase implements Reducer<IntWritable, Text, IntWritable, Text> {
+    public void reduce(IntWritable key, Iterator<Text> values, OutputCollector<IntWritable, Text> output, Reporter reporter) throws IOException {
+      //int sum = 0;
       while (values.hasNext()) {
-        sum += values.next().get();
+        //sum += values.next().get();
+        output.collect(key,values.next());
       }
-      output.collect(key, new IntWritable(sum));
+      //output.collect(key, new IntWritable(sum));
     }
   }
  
   public static void main(String[] args) throws Exception {
     JobConf conf = new JobConf(TweetOutputSorter.class);
-    conf.setJobName("wordcount");
+    conf.setJobName("tweetoutputsorter");
  
     conf.setOutputKeyClass(Text.class);
     conf.setOutputValueClass(IntWritable.class);
