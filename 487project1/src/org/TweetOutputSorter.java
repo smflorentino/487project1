@@ -45,8 +45,8 @@ public class TweetOutputSorter {
     JobConf conf = new JobConf(TweetOutputSorter.class);
     conf.setJobName("tweetoutputsorter");
  
-    conf.setOutputKeyClass(Text.class);
-    conf.setOutputValueClass(IntWritable.class);
+    conf.setOutputKeyClass(IntWritable.class);
+    conf.setOutputValueClass(Text.class);
  
     conf.setMapperClass(Map.class);
     conf.setCombinerClass(Reduce.class);
