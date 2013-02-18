@@ -47,7 +47,7 @@ public class FileCleaner {
 				break;
 			}
 			if(this.isValidLine(line)) {
-				out.write(line+'\n');
+				out.write(line+'\n'+'\r');
 			}
 			else {
 			//	System.out.println("Found invalid line" + line);
@@ -72,7 +72,7 @@ public class FileCleaner {
 	
 	private boolean isValidCharacter(char c) {
 		//.out.println(c+0);
-		if(c >=32 && c<=126) {
+		if(c >=0 && c<=126) {
 			//System.out.println("Special");
 			return true;
 		}

@@ -89,7 +89,7 @@ public class TwitterCounter {
 		//determines if there is another opening <tt> tag i.e. another tweet text in the file
 		@Override
 		public boolean hasMoreElements() {
-			System.out.println("Looking for more elements starting at index: "+_currentIndex);
+			System.out.print("Looking for more elements starting at index: "+_currentIndex);
 			for(int i=_currentIndex; i<_value.length()-4;i++){
 				if(_value.charAt(i)=='<'&&_value.charAt(i+1)=='t'&&_value.charAt(i+2)=='t'
 						&&_value.charAt(i+3)=='>'){
@@ -106,6 +106,7 @@ public class TwitterCounter {
 		public String nextElement() {
 			int temp;
 			for(int i=_currentIndex; i<_value.length()-4;i++){
+				System.out.print(_value.charAt(i));
 				if(_value.charAt(i)=='<'&&_value.charAt(i+1)=='t'&&_value.charAt(i+2)=='t'
 						&&_value.charAt(i+3)=='>'){
 					//found opening tag <tt>
