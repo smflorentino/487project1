@@ -8,7 +8,7 @@ import org.apache.hadoop.conf.*;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.util.*;
-//an MR job to take the MapReduce Output and sort it in ascending order and remove stop words
+//a MR job to take the MapReduce Output and sort it in ascending order by count and remove stop words
 
 public class TweetOutputSorter {
  

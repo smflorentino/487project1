@@ -15,30 +15,37 @@ import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reporter;
 
 public class Tester {
-//this shows that our TweetTokenizer class appears to be working
+//this shows what appears to be working
 	public static void main(String args[]) throws IOException{
-		
-		
 		//TweetTokenizer t = new TweetTokenizer("<un>Test User</un><tt>Hello world1</tt><dt></dt><rt></rt><un>Test User</un><tt>Hello world2</tt><dt></dt><rt></rt><un>Test User</un><tt>Hello world3</tt><dt></dt><rt></rt>");
 		
 		String fileName = JOptionPane.showInputDialog("Enter name of test file");
 		BufferedReader sc = new BufferedReader(new FileReader(fileName));
 		String line;
+		String tweet;
 		TweetTokenizer t;
+		t=new TweetTokenizer();
+
 		while(true){
 			line=sc.readLine();
 			if(line==null) {
-				break;
+			break;
 			}
 			else {
-				t=new TweetTokenizer(line);
-				while(t.hasMoreElements()) {
-					System.out.println(t.nextElement());
+				tweet=t.getTweet(line);
+				if(line.length()>0){
+					System.out.println("Tweet is: "+tweet);
+					System.out.println("Mentions are: "+t.getMentions(tweet));
 				}
+//				while(t.hasMoreElements()) {
+//					System.out.println(t.nextElement());
+//				}
 			}
+
 			//System.out.println("hasMoreElements true");
 			//System.out.println("Current token: "+t.nextElement());
 		}
+		System.out.println("TESTER FINISHED");
 	
 	}
 	
