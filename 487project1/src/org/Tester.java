@@ -36,6 +36,7 @@ public class Tester {
 				if(line.length()>0){
 					System.out.println("Tweet is: "+tweet);
 					System.out.println("Mentions are: "+t.getMentions(tweet));
+					System.out.println("Tags are: "+t.getTags(tweet));
 				}
 //				while(t.hasMoreElements()) {
 //					System.out.println(t.nextElement());

@@ -107,18 +107,39 @@ public class TwitterCounter {
 		public ArrayList<String> getMentions(String tweetText){
 			ArrayList<String> mentions = new ArrayList<String>();
 			for(int i=0; i<tweetText.length();i++){
+				//find @
 				if(tweetText.charAt(i)==64){
 					//get the rest of the mention
 					for(int j=i+1;j<tweetText.length();j++){
-						if(tweetText.charAt(j)==32|| j==tweetText.length()-1){
+						//if space, colon or end of the tweet
+						if(tweetText.charAt(j)==32|| tweetText.charAt(j)==58 || j==tweetText.length()-1){
 							mentions.add(tweetText.substring(i,j));
-							j=tweetText.length();
 							i=j;
+							j=tweetText.length();
 						}
 					}
 				}
 			}
 			return mentions;
+		}
+
+		public ArrayList<String> getTags(String tweetText){
+			ArrayList<String> tags = new ArrayList<String>();
+			for(int i=0; i<tweetText.length();i++){
+				//find #
+				if(tweetText.charAt(i)==35){
+					//get the rest of the tag
+					for(int j=i+1;j<tweetText.length();j++){
+						//if space or end of the tweet, complete the tag
+						if(tweetText.charAt(j)==32|| j==tweetText.length()-1){
+							tags.add(tweetText.substring(i,j));
+							i=j;
+							j=tweetText.length();
+						}
+					}
+				}
+			}
+			return tags;
 		}
 //		String _value;
 //		int _currentIndex;
