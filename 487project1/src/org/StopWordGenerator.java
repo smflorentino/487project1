@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
-
+//generate Java Source Code to create a HashMap of Stop Wordss
 public class StopWordGenerator {
 	public static void main(String[] args) throws IOException {
 	String fileName = JOptionPane.showInputDialog("Enter filename with stop words:");
