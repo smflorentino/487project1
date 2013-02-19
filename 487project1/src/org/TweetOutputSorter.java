@@ -2,8 +2,7 @@ package org;
 
 import java.io.IOException;
 import java.util.*;
- 
-import org.TweetOutputSorter.CountCompare.StopWords;
+
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.io.*;
@@ -33,17 +32,20 @@ public class TweetOutputSorter {
   }
  
   public static class Reduce extends MapReduceBase implements Reducer<IntWritable, Text, IntWritable, Text> {
-    public void reduce(IntWritable key, Iterator<Text> values, OutputCollector<IntWritable, Text> output, Reporter reporter) throws IOException {
+	  private static StopWords sw = new StopWords();
+	  public void reduce(IntWritable key, Iterator<Text> values, OutputCollector<IntWritable, Text> output, Reporter reporter) throws IOException {
       while (values.hasNext()) {
-    	  String word = values.next().toString();
-    	if(StopWords.STOPWORDS.get(word)==null) {
-    		output.collect(key,values.next());
+    	  Text current = values.next();
+    	  String word = current.toString();
+    	if(sw.STOPWORDS.get(word)==null) {
+    		output.collect(key,current);
     	}
       }
     }
   }
  
   public static void main(String[] args) throws Exception {
+	//StopWords.initializeHashMap();
     JobConf conf = new JobConf(TweetOutputSorter.class);
     conf.setJobName("tweetoutputsorter");
  
@@ -70,11 +72,94 @@ public class TweetOutputSorter {
 			int arg5) {
 		return -super.compare(arg0,arg1,arg2,arg3,arg4,arg5);
 	}
+  }
 	
 	public static class StopWords {
-		static HashMap<String, Integer> STOPWORDS;
+		public static HashMap<String, Integer> STOPWORDS;
 		
-		public static void initializeHashMap() {
+		public StopWords() {
+			STOPWORDS = new HashMap<String, Integer>();
+			STOPWORDS.put("i",0);
+			STOPWORDS.put("de",0);
+			STOPWORDS.put("que",0);
+			STOPWORDS.put("...",0);
+			STOPWORDS.put("i'm",0);
+			STOPWORDS.put("la",0);
+			STOPWORDS.put("-",0);
+			STOPWORDS.put("u",0);
+			STOPWORDS.put("el",0);
+			STOPWORDS.put("en",0);
+			STOPWORDS.put("!",0);
+			STOPWORDS.put("?",0);
+			STOPWORDS.put(".",0);
+			STOPWORDS.put("di",0);
+			STOPWORDS.put("A",0);
+			STOPWORDS.put("te",0);
+			STOPWORDS.put("ya",0);
+			STOPWORDS.put("yg",0);
+			STOPWORDS.put("go",0);
+			STOPWORDS.put("lo",0);
+			STOPWORDS.put("se",0);
+			STOPWORDS.put("es",0);
+			STOPWORDS.put("un",0);
+			STOPWORDS.put("aku",0);
+			STOPWORDS.put("see",0);
+			STOPWORDS.put("it's",0);
+			STOPWORDS.put("2",0);
+			STOPWORDS.put("now",0);
+			STOPWORDS.put("If",0);
+			STOPWORDS.put("mi",0);
+			STOPWORDS.put("con",0);
+			STOPWORDS.put("My",0);
+			STOPWORDS.put("going",0);
+			STOPWORDS.put("si",0);
+			STOPWORDS.put("No",0);
+			STOPWORDS.put("o",0);
+			STOPWORDS.put("tu",0);
+			STOPWORDS.put("back",0);
+			STOPWORDS.put("ada",0);
+			STOPWORDS.put("dia",0);
+			STOPWORDS.put("dan",0);
+			STOPWORDS.put("para",0);
+			STOPWORDS.put("This",0);
+			STOPWORDS.put("itu",0);
+			STOPWORDS.put(";)",0);
+			STOPWORDS.put("los",0);
+			STOPWORDS.put("It's",0);
+			STOPWORDS.put("aja",0);
+			STOPWORDS.put("..",0);
+			STOPWORDS.put("come",0);
+			STOPWORDS.put("So",0);
+			STOPWORDS.put("ga",0);
+			STOPWORDS.put("una",0);
+			STOPWORDS.put("im",0);
+			STOPWORDS.put("ini",0);
+			STOPWORDS.put("je",0);
+			STOPWORDS.put("las",0);
+			STOPWORDS.put("x",0);
+			STOPWORDS.put("eu",0);
+			STOPWORDS.put("ke",0);
+			STOPWORDS.put("hahaha",0);
+			STOPWORDS.put("We",0);
+			STOPWORDS.put("mas",0);
+			STOPWORDS.put("that's",0);
+			STOPWORDS.put("tak",0);
+			STOPWORDS.put("mau",0);
+			STOPWORDS.put("kamu",0);
+			STOPWORDS.put("it",0);
+			STOPWORDS.put("gak",0);
+			STOPWORDS.put("ni",0);
+			STOPWORDS.put("oh",0);
+			STOPWORDS.put("al",0);
+			STOPWORDS.put("That",0);
+			STOPWORDS.put("How",0);
+			STOPWORDS.put("made",0);
+			STOPWORDS.put("bisa",0);
+			STOPWORDS.put("Kita",0);
+			STOPWORDS.put("pero",0);
+			STOPWORDS.put("gue",0);
+			STOPWORDS.put("kan",0);
+			STOPWORDS.put("Que",0);
 			STOPWORDS.put("a",0);
 			STOPWORDS.put("able",0);
 			STOPWORDS.put("about",0);
@@ -201,4 +286,4 @@ public class TweetOutputSorter {
 	
 	  
   }
-}
+
