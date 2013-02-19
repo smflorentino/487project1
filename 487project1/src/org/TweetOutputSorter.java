@@ -16,6 +16,7 @@ public class TweetOutputSorter {
     private final static IntWritable one = new IntWritable(1);
     private IntWritable count = new IntWritable();
     private Text word = new Text();
+    
     public void map(LongWritable key, Text value, OutputCollector<IntWritable, Text> output, Reporter reporter) throws IOException {
       String line = value.toString();
       StringTokenizer tokenizer = new StringTokenizer(line);
@@ -51,7 +52,7 @@ public class TweetOutputSorter {
     conf.setMapperClass(Map.class);
     conf.setCombinerClass(Reduce.class);
     conf.setReducerClass(Reduce.class);
- 
+    conf.setOutputKeyComparatorClass(CountCompare.class);
     conf.setInputFormat(TextInputFormat.class);
     conf.setOutputFormat(TextOutputFormat.class);
  
@@ -59,5 +60,26 @@ public class TweetOutputSorter {
     FileOutputFormat.setOutputPath(conf, new Path(args[1]));
  
     JobClient.runJob(conf);
+  }
+  
+  public static class CountCompare extends IntWritable.Comparator {
+
+	@Override
+	public int compare(byte[] arg0, int arg1, int arg2, byte[] arg3, int arg4,
+			int arg5) {
+		return -super.compare(arg0,arg1,arg2,arg3,arg4,arg5);
+	}
+	
+	public static class StopWords {
+		static HashMap<String, String> STOPWORDS;
+		
+		public static void initializeHashMap() {
+			
+		}
+	}
+	
+
+	
+	  
   }
 }
