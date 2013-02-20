@@ -96,7 +96,7 @@ public class TwitterCounter {
 								line.charAt(j+2)=='t'&&line.charAt(j+3)=='t'&&
 								line.charAt(j+4)=='>'){
 							//found closing tag </tt>
-							return line.substring(i+4,j);
+							return line.substring(i+4,j).toLowerCase();
 						}
 					}
 				}
