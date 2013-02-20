@@ -141,51 +141,16 @@ public class TwitterCounter {
 			}
 			return tags;
 		}
-//		String _value;
-//		int _currentIndex;
-//
-//		public TweetTokenizer(String value){
-//			_value=value;
-//			_currentIndex=0;
-//		}
-//
-//
-//		//determines if there is another opening <tt> tag i.e. another tweet text in the file
-//		@Override
-//		public boolean hasMoreElements() {
-//			System.out.print("Looking for more elements starting at index: "+_currentIndex);
-//			for(int i=_currentIndex; i<_value.length()-4;i++){
-//				if(_value.charAt(i)=='<'&&_value.charAt(i+1)=='t'&&_value.charAt(i+2)=='t'
-//						&&_value.charAt(i+3)=='>'){
-//					//found <tt> tag
-//					System.out.println("Index of next tweet start: "+i+4);
-//					return true;
-//				}
-//			}
-//			return false;
-//		}
-//
-//		//gets the next tweet i.e. everything between <tt> </tt> tags
-//		@Override
-//		public String nextElement() {
-//			for(int i=_currentIndex; i<_value.length()-4;i++){
-//				System.out.print(_value.charAt(i));
-//				if(_value.charAt(i)=='<'&&_value.charAt(i+1)=='t'&&_value.charAt(i+2)=='t'
-//						&&_value.charAt(i+3)=='>'){
-//					//found opening tag <tt>
-//					for(int j=i+4;j<_value.length()-5;j++){
-//						if(_value.charAt(j)=='<'&&_value.charAt(j+1)=='/'&&
-//								_value.charAt(j+2)=='t'&&_value.charAt(j+3)=='t'&&
-//								_value.charAt(j+4)=='>'){
-//							//found closing tag </tt>
-//							_currentIndex=j+5;
-//							return _value.substring(i+4,j);
-//						}
-//					}
-//				}
-//			}
-//			return "";
-//		}
+		
+		public int getTweetWordCount(String tweet){
+			StringTokenizer stringTokenizer = new StringTokenizer(tweet);
+			int count = 0;
+			while (stringTokenizer.hasMoreTokens()) {
+				stringTokenizer.nextToken();
+				count++;
+			}
+			return count;
+		}
 
 	}
 

@@ -35,16 +35,12 @@ public class Tester {
 				tweet=t.getTweet(line);
 				if(line.length()>0){
 					System.out.println("Tweet is: "+tweet);
+					System.out.println("Words in tweet: "+t.getTweetWordCount(tweet));
 					System.out.println("Mentions are: "+t.getMentions(tweet));
 					System.out.println("Tags are: "+t.getTags(tweet));
 				}
-//				while(t.hasMoreElements()) {
-//					System.out.println(t.nextElement());
-//				}
 			}
 
-			//System.out.println("hasMoreElements true");
-			//System.out.println("Current token: "+t.nextElement());
 		}
 		System.out.println("TESTER FINISHED");
 	
