@@ -33,13 +33,12 @@ public class TweetOutputSorter {
   }
  
   public static class Reduce extends MapReduceBase implements Reducer<IntWritable, Text, IntWritable, Text> {
-	  @SuppressWarnings("unused")
 	private static StopWords sw = new StopWords();
-	  public void reduce(IntWritable key, Iterator<Text> values, OutputCollector<IntWritable, Text> output, Reporter reporter) throws IOException {
+	public void reduce(IntWritable key, Iterator<Text> values, OutputCollector<IntWritable, Text> output, Reporter reporter) throws IOException {
       while (values.hasNext()) {
     	  Text current = values.next();
     	  String word = current.toString();
-    	if(StopWords.STOPWORDS.get(word)==null) {
+    	if(sw.STOPWORDS.get(word)==null) {
     		output.collect(key,current);
     	}
       }
@@ -123,10 +122,8 @@ public class TweetOutputSorter {
 			  try {
 				  line=sc.readLine();
 			  } catch (IOException e) {
-				  System.err.println("An error occurred while reading the stop words file");
 				  e.printStackTrace();
 			  }
-
 			  if(line == null) {
 				  break;
 			  } 
