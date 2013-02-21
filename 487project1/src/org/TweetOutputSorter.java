@@ -1,28 +1,22 @@
 package org;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-import javax.swing.JOptionPane;
 
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.conf.*;
+//import org.apache.hadoop.conf.*;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat;
-import org.apache.hadoop.util.*;
+//import org.apache.hadoop.util.*;
 //a MR job to take the MapReduce Output and sort it in ascending order by count and remove stop words
 
 public class TweetOutputSorter {
  
   public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, IntWritable, Text> {
-    private final static IntWritable one = new IntWritable(1);
     private IntWritable count = new IntWritable();
     private Text word = new Text();
     
@@ -30,23 +24,22 @@ public class TweetOutputSorter {
       String line = value.toString();
       StringTokenizer tokenizer = new StringTokenizer(line);
       
-      //output.collect(count, word);
       while (tokenizer.hasMoreTokens()) {
     	word.set(tokenizer.nextToken());
         count.set(Integer.parseInt(tokenizer.nextToken()));
         output.collect(count, word);
-          //word.set(tokenizer.nextToken());
       }
     }
   }
  
   public static class Reduce extends MapReduceBase implements Reducer<IntWritable, Text, IntWritable, Text> {
-	  private static StopWords sw = new StopWords();
+	  @SuppressWarnings("unused")
+	private static StopWords sw = new StopWords();
 	  public void reduce(IntWritable key, Iterator<Text> values, OutputCollector<IntWritable, Text> output, Reporter reporter) throws IOException {
       while (values.hasNext()) {
     	  Text current = values.next();
     	  String word = current.toString();
-    	if(sw.STOPWORDS.get(word)==null) {
+    	if(StopWords.STOPWORDS.get(word)==null) {
     		output.collect(key,current);
     	}
       }
