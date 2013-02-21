@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import javax.swing.JOptionPane;
@@ -125,12 +126,8 @@ public class TweetOutputSorter {
 	  public StopWords() {
 		  STOPWORDS=new HashMap<String,Integer>();
 		  BufferedReader sc = null;
-		try {
-			sc = new BufferedReader(new FileReader("/home/hduser/config/stopwords.txt"));
-		} catch (FileNotFoundException e1) {
-			System.err.println("The config/stopwords.txt was not found");
-			e1.printStackTrace();
-		}
+		sc = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/config/stopwords.txt")));
+		//sc = new BufferedReader(new FileReader("/home/hduser/config/stopwords.txt"));
 
 		  String line="";
 		  String[] words;
