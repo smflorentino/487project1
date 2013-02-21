@@ -92,9 +92,7 @@ public class TweetOutputSorter {
 	  		static final String TAG = "tags-00000";
 	  		static final String MENTION = "mentions-00000";
 	  		static final String WORDS = "words-00000";
-	  /**
-	  10        * Use they key as part of the path for the final output file.
-	  11        */
+
 	         @Override
 	         protected String generateFileNameForKeyValue(IntWritable key, Text value, String leaf) {
 	        	 	if(value.toString().charAt(0) == '#') {
@@ -109,10 +107,6 @@ public class TweetOutputSorter {
 	               return new Path(fileName, leaf).toString();
 	         }
 	  
-	         /**
-	  18        * When actually writing the data, discard the key since it is already in
-	  19        * the file path.
-	  20        */
 	         @Override
 	         protected IntWritable generateActualKey(IntWritable key, Text value) {
 	             return key;
