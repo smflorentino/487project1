@@ -14,6 +14,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat;
 import org.apache.hadoop.util.*;
 //a MR job to take the MapReduce Output and sort it in ascending order by count and remove stop words
 
@@ -62,9 +63,12 @@ public class TweetOutputSorter {
     conf.setMapperClass(Map.class);
     conf.setCombinerClass(Reduce.class);
     conf.setReducerClass(Reduce.class);
+    
     conf.setOutputKeyComparatorClass(CountCompare.class);
+    conf.setOutputFormat(MultipleTextOutputFormatByKey.class);
+    
     conf.setInputFormat(TextInputFormat.class);
-    conf.setOutputFormat(TextOutputFormat.class);
+    //conf.setOutputFormat(TextOutputFormat.class);
  
     FileInputFormat.setInputPaths(conf, new Path(args[0]));
     FileOutputFormat.setOutputPath(conf, new Path(args[1]));
@@ -80,15 +84,49 @@ public class TweetOutputSorter {
 		return -super.compare(arg0,arg1,arg2,arg3,arg4,arg5);
 	}
   }
-
+  
+  public static class MultipleTextOutputFormatByKey extends MultipleTextOutputFormat<IntWritable, Text> {
+	  	
+	  		private String fileName = "";
+	  		static final String TAG = "tags-00000";
+	  		static final String MENTION = "mentions-00000";
+	  		static final String WORDS = "words-00000";
+	  /**
+	  10        * Use they key as part of the path for the final output file.
+	  11        */
+	         @Override
+	         protected String generateFileNameForKeyValue(IntWritable key, Text value, String leaf) {
+	        	 	if(value.toString().charAt(0) == '#') {
+	        	 		fileName=TAG;
+	        	 	}
+	        	 	else if(value.toString().charAt(0) == '@') {
+	        	 		fileName=MENTION;
+	        	 	}
+	        	 	else {
+	        	 		fileName=WORDS;
+	        	 	}
+	               return new Path(fileName, leaf).toString();
+	         }
+	  
+	         /**
+	  18        * When actually writing the data, discard the key since it is already in
+	  19        * the file path.
+	  20        */
+	         @Override
+	         protected IntWritable generateActualKey(IntWritable key, Text value) {
+	             return key;
+	            }
+	  }
+  
   //reads in stop words (comma separated) from config/stopwords.txt
   public static class StopWords {
 	  public static HashMap<String, Integer> STOPWORDS;
 
 	  public StopWords() {
+		  STOPWORDS=new HashMap<String,Integer>();
 		  BufferedReader sc = null;
 		try {
-			sc = new BufferedReader(new FileReader("config/stopwords.txt"));
+			sc = new BufferedReader(new FileReader("/home/hduser/config/stopwords.txt"));
 		} catch (FileNotFoundException e1) {
 			System.err.println("The config/stopwords.txt was not found");
 			e1.printStackTrace();
@@ -107,7 +145,7 @@ public class TweetOutputSorter {
 
 			  if(line == null) {
 				  break;
-			  }
+			  } 
 			  words = line.split(",");
 			  for(int i =0;i<words.length;i++) {
 				  STOPWORDS.put(words[i],0);
@@ -120,4 +158,6 @@ public class TweetOutputSorter {
 	
 	  
   }
+
+
 
