@@ -17,7 +17,6 @@ public class FileCleaner {
 		try {
 			f.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
