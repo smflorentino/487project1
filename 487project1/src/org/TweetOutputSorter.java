@@ -12,7 +12,12 @@ import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
 import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat;
 //import org.apache.hadoop.util.*;
-//a MR job to take the MapReduce Output and sort it in ascending order by count and remove stop words
+
+/**
+ * a MR job to take the MapReduce Output and sort it in ascending order by count and remove stop words
+ * @author Scott
+ *
+ */
 
 public class TweetOutputSorter {
  

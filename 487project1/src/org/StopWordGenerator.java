@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
-//generate Java Source Code to create a HashMap of Stop Wordss
+//generate Java Source Code to create a HashMap of Stop Words
 public class StopWordGenerator {
 	/*public static void main(String[] args) throws IOException {
 	String fileName = JOptionPane.showInputDialog("Enter filename with stop words:");
@@ -41,7 +41,10 @@ public class StopWordGenerator {
 	}
 	 public static class StopWords {
 		  public static HashMap<String, Integer> STOPWORDS;
-
+/**
+ * Adds all stopwords to hashmap so that they can be ignored in tweet word counts
+ * @author Scott
+ */
 		  public StopWords() {
 			  STOPWORDS=new HashMap<String,Integer>();
 			  BufferedReader sc = null;
