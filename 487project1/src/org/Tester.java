@@ -14,7 +14,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reporter;
 
-/*Class used for testing the data analysis
+/**Class used for testing the data analysis
  * @author Alyssa
  * @author Scott
  * 

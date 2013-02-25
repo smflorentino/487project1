@@ -8,7 +8,11 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-
+/**
+ * 
+ * @author scottflo
+ * Removes special characters from tweets, effectively filtering out non-english words
+ */
 public class FileCleaner {
 	
 	
