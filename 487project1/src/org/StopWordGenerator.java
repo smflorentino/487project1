@@ -1,49 +1,62 @@
 package org;
-/**
- * Adds all stopwords to hashmap so that they can be ignored in tweet word counts
- * This class is implemented during MapReduce, see TweetOutputSorter.java
- * @author Scott
- */
+
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
+import javax.swing.JOptionPane;
 
 public class StopWordGenerator {
 	
 	public static void main(String[] args) {
-		StopWords sw= new StopWords();
-		System.out.println("Success");
+		String path = JOptionPane.showInputDialog("Enter a path to a file to tokenize for stop words:");
+		ArrayList<String> words = new ArrayList<String>();
+		BufferedReader r=null;
+		try {
+			r = new BufferedReader(new FileReader(path));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		StringTokenizer tokenizer;
+		
+		String line="";
+		try {
+			line = r.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		while(line!=null) {
+			tokenizer = new StringTokenizer(line);
+			while(tokenizer.hasMoreTokens()) {
+				words.add(tokenizer.nextToken());
+			}
+			for(String s : words) {
+				//System.out.println("Printing stop words to console...");
+				System.out.print(s+",");
+			}
+			words= new ArrayList<String>();
+			try {
+				line = r.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		
+		
+		
+		
 	}
-	 public static class StopWords {
-		  public static HashMap<String, Integer> STOPWORDS;
-
-		  public StopWords() {
-			  STOPWORDS=new HashMap<String,Integer>();
-			  BufferedReader sc = null;
-			sc = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("config/stopwords.txt")));
-
-			  String line="";
-			  String[] words;
-			  while(true) {
-				  //System.out.println("Line:" + linenum);
-				  try {
-					  line=sc.readLine();
-				  } catch (IOException e) {
-					  System.err.println("An error occurred while reading the stop words file");
-					  e.printStackTrace();
-				  }
-
-				  if(line == null) {
-					  break;
-				  } 
-				  words = line.split(",");
-				  for(int i =0;i<words.length;i++) {
-					  System.out.println(words[i]);
-					  STOPWORDS.put(words[i],0);
-				  }
-			  }
-		  }
-	  }
+	
 }
